@@ -407,6 +407,22 @@ const SMSG_UPDATE_OBJECT: PacketDefinition = {
       elementType: UpdateObject,
       count: "amount_of_objects",
     },
+    // Consume any trailing padding bytes (common in compressed packets)
+    {
+      kind: "custom",
+      name: "padding",
+      typeName: "Padding",
+      read: (reader) => {
+        const remaining = reader.remaining;
+        if (remaining > 0) {
+          reader.readBytes(remaining);
+        }
+        return {
+          kind: "string",
+          value: remaining > 0 ? `${remaining} padding bytes` : "none",
+        };
+      },
+    },
   ],
 };
 

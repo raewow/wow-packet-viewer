@@ -9,7 +9,7 @@ import { ParsedValue } from "../../types";
 
 // Custom parser for compressed account data
 function readCompressedData(reader: BinaryReader): ParsedValue {
-  const remainingBytes = reader.remaining();
+  const remainingBytes = reader.remaining;
   const data: number[] = [];
   for (let i = 0; i < remainingBytes; i++) {
     data.push(reader.readU8());

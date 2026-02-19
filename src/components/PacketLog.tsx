@@ -115,8 +115,44 @@ export default function PacketLog({
       if (e.key === "Escape") {
         setContextMenu(null);
       }
+      if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+        e.preventDefault();
+        if (packets.length === 0) return;
+
+        let newIndex: number;
+        if (primarySelectedId === null) {
+          // No selection - select first or last packet
+          newIndex = e.key === "ArrowDown" ? 0 : packets.length - 1;
+        } else {
+          // Find current primary packet index
+          const currentIndex = packets.findIndex((pkt) => pkt.id === primarySelectedId);
+          if (currentIndex === -1) {
+            // Current primary not in filtered list - select first or last
+            newIndex = e.key === "ArrowDown" ? 0 : packets.length - 1;
+          } else {
+            // Move up or down
+            if (e.key === "ArrowUp") {
+              newIndex = Math.max(0, currentIndex - 1);
+            } else {
+              newIndex = Math.min(packets.length - 1, currentIndex + 1);
+            }
+          }
+        }
+
+        const newPacket = packets[newIndex];
+        onSelectionChange(new Set([newPacket.id]), newPacket.id);
+        lastClickedIndexRef.current = newIndex;
+
+        // Scroll the selected row into view
+        if (bodyRef.current) {
+          const row = bodyRef.current.children[newIndex] as HTMLElement;
+          if (row) {
+            row.scrollIntoView({ block: "nearest", behavior: "smooth" });
+          }
+        }
+      }
     },
-    [packets, selectedIds]
+    [packets, selectedIds, primarySelectedId, onSelectionChange]
   );
 
   const handleContextMenu = useCallback(
