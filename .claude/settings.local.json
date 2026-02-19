@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(cargo +stable-x86_64-pc-windows-msvc build:*)",
+      "Bash(git mv:*)",
+      "Bash(dir:*)",
+      "Bash(echo:*)"
+    ]
+  }
+}
