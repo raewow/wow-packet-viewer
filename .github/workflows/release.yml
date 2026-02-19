@@ -20,7 +20,12 @@ jobs:
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: i686-pc-windows-msvc
+          targets: i686-pc-windows-gnu,x86_64-pc-windows-gnu
+
+      - name: Set GNU toolchain as default
+        run: |
+          rustup default stable-x86_64-pc-windows-gnu
+        shell: bash
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -32,12 +37,12 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            capture-dll/target/i686-pc-windows-msvc/release
+            capture-dll/target/i686-pc-windows-gnu/release
             ~/.cargo/registry
             ~/.cargo/git
-          key: ${{ runner.os }}-rust-i686-${{ hashFiles('capture-dll/Cargo.lock') }}
+          key: ${{ runner.os }}-rust-i686-gnu-${{ hashFiles('capture-dll/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-rust-i686-
+            ${{ runner.os }}-rust-i686-gnu-
 
       - name: Cache Rust dependencies (x86_64)
         uses: actions/cache@v4
@@ -46,13 +51,13 @@ jobs:
             src-tauri/target/release
             ~/.cargo/registry
             ~/.cargo/git
-          key: ${{ runner.os }}-rust-x64-${{ hashFiles('src-tauri/Cargo.lock') }}
+          key: ${{ runner.os }}-rust-x64-gnu-${{ hashFiles('src-tauri/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-rust-x64-
+            ${{ runner.os }}-rust-x64-gnu-
 
       - name: Build 32-bit Capture DLL
         working-directory: capture-dll
-        run: cargo build --release --target i686-pc-windows-msvc
+        run: cargo build --release --target i686-pc-windows-gnu
 
       - name: Create Tauri target directory
         run: |
@@ -63,7 +68,7 @@ jobs:
 
       - name: Copy DLL to Tauri target directory
         run: |
-          Copy-Item "capture-dll\target\i686-pc-windows-msvc\release\capture_dll.dll" `
+          Copy-Item "capture-dll\target\i686-pc-windows-gnu\release\capture_dll.dll" `
                     "src-tauri\target\release\capture_dll.dll"
         shell: powershell
 

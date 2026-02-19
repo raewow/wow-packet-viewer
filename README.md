@@ -1,6 +1,6 @@
 # WoW Packet Analyzer
 
-![Demo](path/to/your/demo.gif)
+![Screenshot](public/screenshot.png)
 
 A World of Warcraft packet analyzer for vanilla, tbc and wrath versions of the game.
 
