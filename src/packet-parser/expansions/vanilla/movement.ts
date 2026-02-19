@@ -110,6 +110,25 @@ export const movementDefinitions: PacketDefinition[] = [
     fields: [{ kind: "primitive", name: "guid", type: "PackedGuid" }],
   },
 
+  // SMSG_SPLINE_MOVE_SET_WALK_MODE (0x030E) - Sets entity to walk mode
+  {
+    opcode: 0x030e,
+    name: "SMSG_SPLINE_MOVE_SET_WALK_MODE",
+    direction: "SMSG",
+    fields: [{ kind: "primitive", name: "guid", type: "PackedGuid" }],
+  },
+
+  // SMSG_SPLINE_SET_RUN_SPEED (0x02FE) - Sets entity run speed
+  {
+    opcode: 0x02fe,
+    name: "SMSG_SPLINE_SET_RUN_SPEED",
+    direction: "SMSG",
+    fields: [
+      { kind: "primitive", name: "guid", type: "PackedGuid" },
+      { kind: "primitive", name: "speed", type: "f32" },
+    ],
+  },
+
   // SMSG_SPLINE_SET_WALK_SPEED (0x0301) - Sets entity walk speed
   {
     opcode: 0x0301,

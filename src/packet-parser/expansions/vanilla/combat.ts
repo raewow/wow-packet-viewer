@@ -37,24 +37,33 @@ export const combatDefinitions: PacketDefinition[] = [
     ],
   },
 
-  // SMSG_ATTACKERSTATEUPDATE (0x01F2) - Detailed melee damage
+  // SMSG_ATTACKSWING_NOTINRANGE (0x0145) - Target out of range for attack
   {
-    opcode: 0x01f2,
+    opcode: 0x0145,
+    name: "SMSG_ATTACKSWING_NOTINRANGE",
+    direction: "SMSG",
+    fields: [],
+  },
+
+  // SMSG_ATTACKERSTATEUPDATE (0x014A) - Detailed melee damage
+  {
+    opcode: 0x014a,
     name: "SMSG_ATTACKERSTATEUPDATE",
     direction: "SMSG",
     fields: [
       { kind: "flags", name: "hit_info", flagsDef: HitInfo },
       { kind: "primitive", name: "attacker", type: "PackedGuid" },
-      { kind: "primitive", name: "victim", type: "PackedGuid" },
+      { kind: "primitive", name: "target", type: "PackedGuid" },
       { kind: "primitive", name: "total_damage", type: "u32" },
-      { kind: "primitive", name: "damage_count", type: "u8" },
+      { kind: "primitive", name: "amount_of_damages", type: "u8" },
       {
         kind: "array",
         name: "damages",
-        count: "damage_count",
+        count: "amount_of_damages",
         elementType: DamageInfo,
       },
       { kind: "primitive", name: "damage_state", type: "u32" },
+      { kind: "primitive", name: "unknown1", type: "u32" },
       { kind: "primitive", name: "spell_id", type: "u32" },
       { kind: "primitive", name: "blocked_amount", type: "u32" },
     ],

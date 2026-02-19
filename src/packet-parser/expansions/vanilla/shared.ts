@@ -1086,6 +1086,30 @@ export const QuestGiverStatus: EnumDef = {
   },
 };
 
+export const NewItemSource: EnumDef = {
+  type: "u32",
+  values: {
+    0: "LOOTED",
+    1: "FROM_NPC",
+  },
+};
+
+export const NewItemCreationType: EnumDef = {
+  type: "u32",
+  values: {
+    0: "RECEIVED",
+    1: "CREATED",
+  },
+};
+
+export const NewItemChatAlert: EnumDef = {
+  type: "u32",
+  values: {
+    0: "DO_NOT_SHOW",
+    1: "SHOW",
+  },
+};
+
 // Quest item reward struct
 export const QuestItemReward: FieldDef = {
   kind: "struct",

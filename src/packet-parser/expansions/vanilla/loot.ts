@@ -1,4 +1,9 @@
 import { PacketDefinition } from "../../definitions";
+import {
+  NewItemSource,
+  NewItemCreationType,
+  NewItemChatAlert,
+} from "./shared";
 
 // ============================================================
 // Loot System Packets
@@ -49,6 +54,17 @@ export const lootDefinitions: PacketDefinition[] = [
     ],
   },
 
+  // SMSG_LOOT_RELEASE_RESPONSE (0x0161) - Loot window closed confirmation
+  {
+    opcode: 0x0161,
+    name: "SMSG_LOOT_RELEASE_RESPONSE",
+    direction: "SMSG",
+    fields: [
+      { kind: "primitive", name: "guid", type: "Guid" },
+      { kind: "primitive", name: "unknown1", type: "u8" },
+    ],
+  },
+
   // CMSG_AUTOSTORE_LOOT_ITEM (0x0108) - Client auto-loots an item
   {
     opcode: 0x0108,
@@ -71,5 +87,24 @@ export const lootDefinitions: PacketDefinition[] = [
     name: "CMSG_LOOT_RELEASE",
     direction: "CMSG",
     fields: [{ kind: "primitive", name: "guid", type: "Guid" }],
+  },
+
+  // SMSG_ITEM_PUSH_RESULT (0x0166) - Item received notification
+  {
+    opcode: 0x0166,
+    name: "SMSG_ITEM_PUSH_RESULT",
+    direction: "SMSG",
+    fields: [
+      { kind: "primitive", name: "guid", type: "Guid" },
+      { kind: "enum", name: "source", enumDef: NewItemSource },
+      { kind: "enum", name: "creation_type", enumDef: NewItemCreationType },
+      { kind: "enum", name: "alert_chat", enumDef: NewItemChatAlert },
+      { kind: "primitive", name: "bag_slot", type: "u8" },
+      { kind: "primitive", name: "item_slot", type: "u32" },
+      { kind: "primitive", name: "item", type: "u32" },
+      { kind: "primitive", name: "item_suffix_factor", type: "u32" },
+      { kind: "primitive", name: "item_random_property_id", type: "u32" },
+      { kind: "primitive", name: "item_count", type: "u32" },
+    ],
   },
 ];

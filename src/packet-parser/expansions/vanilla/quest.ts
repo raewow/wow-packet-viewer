@@ -152,6 +152,17 @@ export const questDefinitions: PacketDefinition[] = [
     ],
   },
 
+  // SMSG_QUESTUPDATE_ADD_ITEM (0x019A) - Quest item added to inventory
+  {
+    opcode: 0x019a,
+    name: "SMSG_QUESTUPDATE_ADD_ITEM",
+    direction: "SMSG",
+    fields: [
+      { kind: "primitive", name: "required_item_id", type: "u32" },
+      { kind: "primitive", name: "items_required", type: "u32" },
+    ],
+  },
+
   // SMSG_QUEST_QUERY_RESPONSE (0x005D) - Quest information response
   {
     opcode: 0x005d,

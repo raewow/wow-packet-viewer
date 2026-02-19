@@ -179,6 +179,17 @@ export const queriesDefinitions: PacketDefinition[] = [
     ],
   },
 
+  // CMSG_ITEM_QUERY_SINGLE (0x0056) - Client requests item information
+  {
+    opcode: 0x0056,
+    name: "CMSG_ITEM_QUERY_SINGLE",
+    direction: "CMSG",
+    fields: [
+      { kind: "primitive", name: "item", type: "u32" },
+      { kind: "primitive", name: "guid", type: "Guid" },
+    ],
+  },
+
   // SMSG_ITEM_QUERY_SINGLE_RESPONSE (0x0058) - Item information response
   {
     opcode: 0x0058,
