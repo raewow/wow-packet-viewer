@@ -87,8 +87,10 @@ jobs:
           # Use mt.exe to update the executable's manifest with UAC elevation
           $mtPath = (Get-Command mt.exe -ErrorAction SilentlyContinue).Path
           if (-not $mtPath) {
-            # Find mt.exe in Windows SDK
-            $mtPath = Get-ChildItem "C:\Program Files (x86)\Windows Kits" -Recurse -Filter "mt.exe" -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName
+            # Find x64 mt.exe in Windows SDK
+            $mtPath = Get-ChildItem "C:\Program Files (x86)\Windows Kits" -Recurse -Filter "mt.exe" -ErrorAction SilentlyContinue |
+              Where-Object { $_.FullName -match '\\x64\\' } |
+              Select-Object -First 1 -ExpandProperty FullName
           }
           if ($mtPath) {
             & $mtPath -manifest "src-tauri\app.manifest" -outputresource:"src-tauri\target\release\wow-packet-analyzer.exe;1"
